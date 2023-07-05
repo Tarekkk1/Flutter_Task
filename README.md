@@ -1,16 +1,16 @@
-# Flutter Task
+## Flutter Task
 
-A new Flutter project.
+# In the task i used 
+1- Clean code arch
+2-bloc
+3-dio for get the data
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+#Images
 
-A few resources to get you started if this is your first Flutter project:
+<img src = "./assets/images/Image1.png">
+<img src = "./assets/images/Image2.png">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src = "./assets/images/Image3.png">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
