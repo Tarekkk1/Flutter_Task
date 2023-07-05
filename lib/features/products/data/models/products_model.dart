@@ -20,6 +20,7 @@ class ProductsModel extends Products {
     super.price,
     super.discountPercentage,
     super.rating,
+    super.thumbnail,
   });
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +30,7 @@ class ProductsModel extends Products {
         description: json['description'],
         price: json['price'],
         discountPercentage: json['discount_percentage'],
-        rating: json['rating']);
+        rating: json['rating'],
+        thumbnail: json['thumbnail']);
   }
 }

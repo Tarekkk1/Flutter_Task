@@ -13,8 +13,6 @@ class ProductsCubit extends Cubit<ProductsManagerState> {
   static ProductsCubit get(context) => BlocProvider.of(context);
 
   void getProducts() async {
-    print("get products");
-
     emit(ProductsManagerLoading());
     ProductsDomainRepo productsDomainRepo =
         ProductsDataRepo(productsDataSources: productsDataSources);

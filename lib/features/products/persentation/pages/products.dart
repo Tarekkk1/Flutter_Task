@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_tarek/features/products/data/data_sources/remote_data_source.dart';
+import '../../data/data_sources/remote_data_source.dart' show RemoteDataSource;
 import 'package:task_tarek/features/products/persentation/manger/cubit.dart';
 
 import '../manger/states.dart';
+import '../widgets/product_widget.dart';
 
 class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({super.key});
+  const ProductsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit(RemoteDataSource()),
+      create: (context) {
+        RemoteDataSource remoteDataSource = RemoteDataSource();
+
+        return ProductsCubit(remoteDataSource);
+      },
       child: BlocConsumer<ProductsCubit, ProductsManagerState>(
         listener: (context, state) {
           if (state is ProductsManagerError) {
@@ -23,25 +28,94 @@ class ProductsScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if (state is! ProductsManagerLoaded) {
+            ProductsCubit.get(context).getProducts();
+          }
           return Scaffold(
-              appBar: AppBar(title: const Text("App")),
-              body: Column(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        ProductsCubit.get(context).getProducts();
-                        if (state is ProductsManagerLoaded) {
-                          var products = state.productsEntity.products;
-                          if (products != null) {
-                            for (var product in products) {
-                              print(product.id);
-                            }
-                          }
-                        }
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.white,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 14),
+                child: Transform.scale(
+                  scale: 1.9,
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+            body: Column(
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 348.0,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: const Color(0xB2FFFFFF),
+                        borderRadius: BorderRadius.circular(25.0),
+                        border: Border.all(
+                          width: 1.0,
+                          color: const Color(0xFF004182),
+                        ),
+                      ),
+                      child: const TextField(
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                          hintText: "What do you search for?",
+                          contentPadding: EdgeInsets.only(left: 10),
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: Color(0xFF004182),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Color(0xFF004182),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                      child: Icon(
+                        Icons.shopping_cart_outlined,
+                        color: Color(0xFF004182),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                if (state is ProductsManagerLoaded)
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: state.productsEntity.products!.length,
+                      itemBuilder: (context, index) {
+                        final product = state.productsEntity.products![index];
+                        return buildProductWidget(product);
                       },
-                      child: Text("get products"))
-                ],
-              ));
+                    ),
+                  ),
+                if (state is ProductsManagerLoading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              ],
+            ),
+          );
         },
       ),
     );
