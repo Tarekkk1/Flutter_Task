@@ -1,12 +1,12 @@
 ## Flutter Task
 
-# In the task i used 
+# In the task  
 1- Clean code arch
 2-bloc
 3-dio for get the data
 
 
-#Images
+# Images
 
 <img src = "./assets/images/Image1.png">
 <img src = "./assets/images/Image2.png">
