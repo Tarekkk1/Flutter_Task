@@ -9,7 +9,7 @@ import '../../data/data_sources/products_data_sources.dart';
 class ProductsCubit extends Cubit<ProductsManagerState> {
   ProductsDataSources productsDataSources;
   ProductsCubit(this.productsDataSources) : super(ProductsManagerInitial());
-
+  bool result = false;
   static ProductsCubit get(context) => BlocProvider.of(context);
 
   void getProducts() async {

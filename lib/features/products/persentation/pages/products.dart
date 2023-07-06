@@ -6,9 +6,14 @@ import 'package:task_tarek/features/products/persentation/manger/cubit.dart';
 import '../manger/states.dart';
 import '../widgets/product_widget.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
